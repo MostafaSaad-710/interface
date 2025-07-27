@@ -37,7 +37,7 @@ namespace demo
         {
             #region interface Ex01
 
-            //// Interfaces : Reference Type
+            ////// Interfaces : Reference Type
             //// Code Contract between the developer who write and developer who Use it
 
             //// You can't create object from any interface
