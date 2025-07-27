@@ -48,7 +48,7 @@ namespace demo
             //Console.WriteLine(myType.Salary);
             //myType.myfun();
             //// Default Implemented Methods is not inherited
-
+             
 
             //IMyType myTypee;
             //// Ref ---> Can refere to object from any class which implemented interface 'IMyType'
