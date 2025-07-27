@@ -1,231 +1,128 @@
-﻿using demo.Interface_Ex01;
-using demo.Interface_Ex02;
-using demo.interface_Ex03;
-
-namespace demo
+﻿namespace assignment
 {
-
-    /// <summary>
-    /// 1. public
-    /// أي كلاس في أي مشروع يقدر يشوفها ويستخدمها.
-    /// 2. internal
-    /// الكلاسات داخل نفس المشروع فقط هم اللي يقدروا يشوفوها، حتى لو مش وارثين.
-    /// 3. private
-    /// الكود ده متاح فقط داخل نفس الكلاس، لا كلاس خارجي ولا كلاس وارث يقدر يشوفه.
-    /// 4. protected
-    /// الكود ده متاح للكلاس الأصلي وأي كلاس يرث منه، بس مش لأي كود خارج الكلاسات دي.
-    /// 5. private protected
-    /// الكود متاح بس للكلاس الأصلي والكلاسات اللي ترثه، لكن فقط لو كانوا في نفس المشروع.
-    /// 6. protected internal
-    /// الكود متاح للكلاسات اللي في نفس المشروع أو تورث الكلاس حتى لو من مشروع تاني.
-    /// </summary>
-
-    internal class Program
+    #region Q01
+    interface IShape
     {
-        static void Print10Numbers(ISeries Series)
+        double Area { get; }
+        void DisplayShapeInfo();
+    }
+
+    interface ICircle : IShape { }
+    interface IRectangle : IShape { }
+
+
+    class Circle : ICircle
+    {
+        public double Radius { get; set; }
+
+        public Circle(double radius)
         {
-            for(int i = 0 ; i < 10 ; i++)
-            {
-                Console.Write($"{Series.Current} ");
-                Series.next();
-            }
-            Console.WriteLine( );
-            Series.Reset();
+            Radius = radius;
         }
 
+        public double Area { get { return Math.PI * Radius * Radius; } }
+
+        public void DisplayShapeInfo()
+        {
+            Console.WriteLine("Shape: Circle");
+            Console.WriteLine($"Radius: {Radius}");
+            Console.WriteLine($"Area: {Area}");
+        }
+    }
+
+
+    class Rectangle : IRectangle
+    {
+        public double Width { get; set; }
+        public double Height { get; set; }
+
+        public Rectangle(double width, double height)
+        {
+            Width = width;
+            Height = height;
+        }
+
+        public double Area { get { return Width * Height; } }
+
+        public void DisplayShapeInfo()
+        {
+            Console.WriteLine("Shape: Rectangle");
+            Console.WriteLine("Width: " + Width);
+            Console.WriteLine("Height: " + Height);
+            Console.WriteLine("Area: " + Area);
+        }
+    }
+
+    #endregion
+
+    #region Q02
+    public interface IAuthenticationService
+    {
+        bool AuthenticateUser(string username, string password);
+        bool AuthorizeUser(string username, string role);
+    }
+
+    public class BasicAuthenticationService : IAuthenticationService
+    {
+        private string storedUsername = "admin";
+        private string storedPassword = "1234";
+        private string storedRole = "admin";
+
+        public bool AuthenticateUser(string username, string password)
+        {
+            return username == storedUsername && password == storedPassword;
+        }
+
+        public bool AuthorizeUser(string username, string role)
+        {
+            return username == storedUsername && role == storedRole;
+        }
+    }
+
+    #endregion
+    internal class Program
+    {
         static void Main(string[] args)
         {
-            #region interface Ex01
+            #region PART 01
 
-            ////// Interfaces : Reference Type
-            //// Code Contract between the developer who write and developer who Use it
-
-            //// You can't create object from any interface
-
-            //MyType myType = new MyType();
-
-            //myType.Salary = 12000;
-            //Console.WriteLine(myType.Salary);
-            //myType.myfun();
-            //// Default Implemented Methods is not inherited
-             
-
-            //IMyType myTypee;
-            //// Ref ---> Can refere to object from any class which implemented interface 'IMyType'
-
-
-            //myTypee = new MyType();
-            //myTypee.Salary = 11000;
-            //Console.WriteLine(myTypee.Salary);
-            //myTypee.myfun();
-            //myTypee.Print(); 
+            // 1: b) To define a blueprint for a class
+            // 2: a) private
+            // 3: b) No
+            // 4: b) Yes, interfaces can inherit from multiple interfaces
+            // 5: [None of the provided options are correct; correct usage is ':' in C#]
+            // 6: a) Yes
+            // 7: b) No, all members are implicitly public
+            // 8: b) To provide a clear separation between interface and class members
+            // 9: b) No, interfaces cannot have constructors
+            // 10: c) By separating interface names with commas
 
             #endregion
 
-            #region interface Ex02
-            //SeriesByTwo seriesByTwo = new SeriesByTwo();
+            #region PART 02
 
-            //Print10Numbers(seriesByTwo);
+            #region Q01
+            //ICircle circle = new Circle(5);
+            //IRectangle rectangle = new Rectangle(4, 6);
 
-            //SeriesByThree seriesByThree = new SeriesByThree();
-
-            //Print10Numbers(seriesByThree);
-
-
-
-            //int[] arr = { 1, 2, 3, 6, 5, 4, 9, 8, 7 };
-
-            //Array.Sort(arr);
-
-            //foreach (int item in arr)
-            //{
-            //    Console.Write($"{item} ");
-            //}
-
-
-            //Employee[] employee = new Employee[3]
-            //{
-            //    new Employee(){id = 1 , name = "Ahmed" , age = 30, salary = 12000},
-            //    new Employee(){id = 2 , name = "Amr" , age = 45 , salary = 11000},
-            //    new Employee(){id = 3 , name = "Ali" , age = 35 , salary = 16000}
-            //};
-
-            //Array.Sort(employee);
-
-            //foreach (Employee item in employee)
-            //{
-            //    Console.Write($"{item} ");
-            //}
-
-            ////Error :  Failed to compare two elements in the array
-            ////         At least one object must implement IComparable
-
-            //// i am as a user to fun(sort) must be when send any array is from dataType implement interface(IComparable)
-
-            #endregion
-
-            #region interface Ex03
-
-            //Car car = new Car();
-
-            //car.Speed = 200;
-
-            //car.Forward();
-
-
-            //IFlyable flyable = new Airplane();
-
-            //flyable.Backward();
-            //flyable.Forward();
-
-            //Console.WriteLine( );
-
-            //Airplane airplane = new Airplane();
-            //IMoveable moveable = airplane;
-
-            //moveable.Backward();
-            //moveable.Forward();
-
-
-            #endregion
-
-            #region Shallow Copy Vs Deep Copy
-            // Shallow Copy Vs Deep Copy
-
-            //int[] arr01 = { 1, 2, 3 };
-            //int[] arr02 = { 4, 5, 6 };
-
-            //Console.WriteLine($"Arr01 : {arr01.GetHashCode()}");
-            //Console.WriteLine($"Arr02 : {arr02.GetHashCode()}");
-
-            //arr02 = arr01; // Shallow Copy
-            //               // Copy identity
-
-            //Console.WriteLine( );
-            //Console.WriteLine($"Arr01 : {arr01.GetHashCode()}");
-            //Console.WriteLine($"Arr02 : {arr02.GetHashCode()}");
-
-            //// Identity (Address) + Object state [date]
-
-            //arr02[0] = 100;
-
-            //Console.WriteLine(arr01[0]); // 100
-
-
-
-            //int[] arr01 = { 1, 2, 3 };
-            //int[] arr02 = { 4, 5, 6 };
-
-            //Console.WriteLine($"Arr01 : {arr01.GetHashCode()}");
-            //Console.WriteLine($"Arr02 : {arr02.GetHashCode()}");
-
-            //arr02 = (int[]) arr01.Clone(); // Deep Copy
-            //// Clone Method Will Copy The Objrct state of Caller
-            //// Assign the new object to arr02 , will generate new identity
-
+            //circle.DisplayShapeInfo();
             //Console.WriteLine();
-            //Console.WriteLine($"Arr01 : {arr01.GetHashCode()}");
-            //Console.WriteLine($"Arr02 : {arr02.GetHashCode()}");
-
-            //// Identity (Address) + Object state [date]
-
-            //arr02[0] = 100;
-
-            //Console.WriteLine(arr01[0]); // 1
-            //Console.WriteLine(arr02[0]); // 1 
+            //rectangle.DisplayShapeInfo(); 
             #endregion
 
-            #region Built-In interface ICloneable
-            //Employee E01 = new Employee() { id = 1, name = "Ahmed", age = 30, salary = 12000 };
-            //Employee E02 = new Employee() { id = 2, name = "Amr", age = 45, salary = 11000 };
+            #region Q02
+            //IAuthenticationService authService = new BasicAuthenticationService();
 
-            //E02 = E01; // shallow copy
-            ////E02 = (Employee)E01.Clone(); // deep copy
+            //bool isAuthenticated = authService.AuthenticateUser("admin", "1234");
+            //bool isAuthorized = authService.AuthorizeUser("admin", "admin");
 
-
-            //Console.WriteLine(E01);
-            //Console.WriteLine(E02);
-
-            //Console.WriteLine(E01.GetHashCode());
-            //Console.WriteLine(E02.GetHashCode());
-
-            #endregion
-
-            #region Built-In interface IComparable
-            //Employee[] employee = new Employee[3]
-            //{
-            //    new Employee(){id = 1 , name = "Ahmed" , age = 60, salary = 12000},
-            //    new Employee(){id = 2 , name = "Amr" , age = 45 , salary = 11000},
-            //    new Employee(){id = 3 , name = "Ali" , age = 35 , salary = 16000}
-            //};
-
-            //Array.Sort(employee);
-
-            //foreach (Employee item in employee)
-            //{
-            //    Console.WriteLine($"{item} ");
-            //} 
-            #endregion
-
-            #region Built-In interface IComparer
-            //Employee[] employee = new Employee[3]
-            //{
-            //    new Employee(){id = 1 , name = "Ahmed" , age = 60, salary = 12000},
-            //    new Employee(){id = 2 , name = "Amr" , age = 45 , salary = 11000},
-            //    new Employee(){id = 3 , name = "Ali" , age = 35 , salary = 16000}
-            //};
-
-
-            //Array.Sort(employee , new EmployeeComparerNameLength());
-
-            //foreach (Employee item in employee)
-            //{
-            //    Console.WriteLine($"{item} ");
-            //}
+            //Console.WriteLine("Authenticated: " + isAuthenticated);
+            //Console.WriteLine("Authorized: " + isAuthorized);
 
             #endregion
 
 
+            #endregion
         }
     }
 }
